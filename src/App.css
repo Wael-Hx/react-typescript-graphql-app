@@ -1,3 +1,37 @@
-* {
+body {
   margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: url("https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+#root {
+  padding: 1px;
+}
+.pointer {
+  cursor: pointer;
+}
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+nav {
+  position: absolute;
+  right: 0;
+  margin: 30px 10px 10px 0px;
+}
+
+.slide-overflow {
+  height: 90vh;
+  overflow: hidden;
 }
