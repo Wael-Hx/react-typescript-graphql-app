@@ -1,4 +1,4 @@
-import { Button, ButtonBaseProps, makeStyles } from "@material-ui/core";
+import { Button, makeStyles, ButtonProps } from "@material-ui/core";
 import { FC } from "react";
 
 const useStyles = makeStyles({
@@ -12,7 +12,7 @@ const useStyles = makeStyles({
   },
 });
 
-const StyledButton: FC<ButtonBaseProps> = ({ children }) => {
+const StyledButton: FC<ButtonProps> = ({ children }) => {
   const classes = useStyles();
   return (
     <Button variant="outlined" classes={{ outlinedPrimary: classes.outlined }}>
