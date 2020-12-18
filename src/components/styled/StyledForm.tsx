@@ -1,5 +1,5 @@
-import { makeStyles } from "@material-ui/core";
-import { FormEvent, ReactNode } from "react";
+import { makeStyles, Paper, PaperProps, Slide } from "@material-ui/core";
+import { FormEvent } from "react";
 
 const useStyles = makeStyles((theme) => ({
   signInContainer: {
@@ -7,8 +7,7 @@ const useStyles = makeStyles((theme) => ({
     width: 300,
     fontSize: ".8em",
     boxShadow: "0px 5px 10px -8px black",
-    padding: "5px 30px",
-    border: "1px solid white",
+    padding: "20px 30px",
     [theme.breakpoints.down("sm")]: {
       margin: "20% auto auto auto",
     },
@@ -34,19 +33,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface Props {
-  children: ReactNode;
+interface Props extends PaperProps {
   register: (e: FormEvent) => void;
 }
 
-const StyledForm = ({ children, register }: Props) => {
+const StyledForm = ({ children, register, ...props }: Props) => {
   const classes = useStyles();
   return (
-    <div className={classes.signInContainer}>
-      <form className={classes.form} onSubmit={register}>
-        {children}
-      </form>
-    </div>
+    <Slide direction="up" in mountOnEnter unmountOnExit>
+      <Paper className={classes.signInContainer} {...props}>
+        <form className={classes.form} onSubmit={register}>
+          {children}
+        </form>
+      </Paper>
+    </Slide>
   );
 };
 
