@@ -1,5 +1,4 @@
 import { makeStyles, Paper, PaperProps, Slide } from "@material-ui/core";
-import { FormEvent } from "react";
 
 const useStyles = makeStyles((theme) => ({
   signInContainer: {
@@ -33,18 +32,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface Props extends PaperProps {
-  register: (e: FormEvent) => void;
+interface StyledFormProps extends PaperProps {
+  slideDirection: "up" | "left" | "down" | "right";
 }
 
-const StyledForm = ({ children, register, ...props }: Props) => {
+const StyledForm = ({
+  children,
+  slideDirection,
+  ...props
+}: StyledFormProps) => {
   const classes = useStyles();
   return (
-    <Slide direction="up" in mountOnEnter unmountOnExit>
+    <Slide direction={slideDirection} in mountOnEnter unmountOnExit>
       <Paper className={classes.signInContainer} {...props}>
-        <form className={classes.form} onSubmit={register}>
-          {children}
-        </form>
+        <form className={classes.form}>{children}</form>
       </Paper>
     </Slide>
   );
