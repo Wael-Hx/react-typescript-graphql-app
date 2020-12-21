@@ -1,13 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 const URI: string = process.env.REACT_APP_GQL_URI as string;
 
+const endpoint = createHttpLink({ uri: URI, credentials: "include" });
+
 const client = new ApolloClient({
-  uri: URI,
+  link: endpoint,
   cache: new InMemoryCache(),
 });
 

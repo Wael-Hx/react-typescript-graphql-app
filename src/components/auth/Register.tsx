@@ -1,32 +1,65 @@
+import { useMutation } from "@apollo/client";
 import { TextField } from "@material-ui/core";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
+import { RouteComponentProps } from "react-router-dom";
+import { LOGIN, REGISTER } from "../../gql/mutations/users";
 import StyledButton from "../styled/StyledButton";
 import StyledForm from "../styled/StyledForm";
 
-const Register = () => {
+const Register: FC<RouteComponentProps> = ({ history }) => {
   const [signIn, setSignIn] = useState(true);
-  const [customError, setCustomError] = useState<null | string>(null);
+  const [customError, setCustomError] = useState("");
   const [credentials, setCredentials] = useState({
+    username: "",
     email: "",
     password: "",
     repeatedPassword: "",
   });
+  const [login, { loading: loginLoading }] = useMutation(LOGIN);
+  const [register, { loading: registeLoading }] = useMutation(REGISTER);
 
-  const { email, password, repeatedPassword } = credentials;
+  useEffect(() => {
+    if (loginLoading || registeLoading) {
+      setCustomError("");
+    }
+  }, [loginLoading, registeLoading]);
+
+  const { username, email, password, repeatedPassword } = credentials;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
-  const submitUser = (e: FormEvent) => {
+  const submitUser = async (e: FormEvent) => {
     e.preventDefault();
     if (password !== repeatedPassword && !signIn) {
       return setCustomError("password does not match");
+    } else {
+      try {
+        signIn
+          ? await login({ variables: { email, password } })
+          : await register({ variables: { username, email, password } });
+        history.push("/");
+      } catch (err) {
+        setCustomError(err.message);
+      }
     }
-    console.log("submit");
   };
   return (
     <section className="slide-overflow">
-      <StyledForm register={submitUser}>
+      <StyledForm slideDirection="up" onSubmit={submitUser}>
+        {!signIn && (
+          <TextField
+            name="username"
+            value={username}
+            onChange={handleChange}
+            type="text"
+            label="Username"
+            required
+            autoComplete="off"
+            error={customError.includes("username")}
+            helperText={customError.includes("username") ? customError : null}
+          />
+        )}
         <TextField
           name="email"
           value={email}
@@ -35,6 +68,12 @@ const Register = () => {
           label="Email"
           required
           autoComplete="off"
+          error={customError.includes("email") || customError.includes("user")}
+          helperText={
+            customError.includes("email") || customError.includes("user")
+              ? customError
+              : null
+          }
         />
         <TextField
           name="password"
@@ -44,6 +83,16 @@ const Register = () => {
           label="Password"
           required
           autoComplete="off"
+          error={
+            customError.includes("password") ||
+            customError.includes("credentials")
+          }
+          helperText={
+            customError.includes("password") ||
+            customError.includes("credentials")
+              ? customError
+              : null
+          }
         />
         {!signIn && (
           <>
@@ -53,9 +102,9 @@ const Register = () => {
               name="repeatedPassword"
               type="password"
               label="Repeat Password"
-              FormHelperTextProps={{ style: { color: "red" } }}
-              helperText={customError}
               required
+              error={customError.includes("match")}
+              helperText={customError.includes("match") && customError}
             />
             <p>
               By creating an account, you agree to our Conditions of Use and
