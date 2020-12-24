@@ -32,7 +32,7 @@ export const MY_PROFILE = gql`
         title
         images
       }
-      likes {
+      liked {
         id
         title
         images
@@ -46,3 +46,25 @@ export const USER = gql`
     loggedUser @client
   }
 `;
+
+export interface PostDetails {
+  id: string;
+  title: string;
+  images: string[];
+}
+
+export interface UserProfile {
+  myProfile: {
+    user: {
+      username: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    displayName: string;
+    avatar: string;
+    bio: string;
+    saved: PostDetails[];
+    posts: PostDetails[];
+    liked: PostDetails[];
+  };
+}
