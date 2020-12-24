@@ -2,6 +2,7 @@ import { useMutation } from "@apollo/client";
 import { TextField } from "@material-ui/core";
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
+import { loggedUserVar } from "../../cache";
 import { LOGIN, REGISTER } from "../../gql/mutations/users";
 import StyledButton from "../styled/StyledButton";
 import StyledForm from "../styled/StyledForm";
@@ -15,8 +16,42 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
     password: "",
     repeatedPassword: "",
   });
-  const [login, { loading: loginLoading }] = useMutation(LOGIN);
-  const [register, { loading: registeLoading }] = useMutation(REGISTER);
+  const [login, { loading: loginLoading }] = useMutation(LOGIN, {
+    onCompleted({ login }) {
+      if (login) {
+        loggedUserVar({
+          isAuthenticated: true,
+          user: login,
+        });
+        loggedUserVar({
+          isAuthenticated: true,
+          user: login,
+        });
+        history.push("/");
+      }
+    },
+    onError({ message }) {
+      setCustomError(message);
+    },
+  });
+  const [register, { loading: registeLoading }] = useMutation(REGISTER, {
+    onCompleted({ register }) {
+      if (register) {
+        loggedUserVar({
+          isAuthenticated: true,
+          user: register,
+        });
+        loggedUserVar({
+          isAuthenticated: true,
+          user: register,
+        });
+        history.push("/profile");
+      }
+    },
+    onError({ message }) {
+      setCustomError(message);
+    },
+  });
 
   useEffect(() => {
     if (loginLoading || registeLoading) {
@@ -29,24 +64,19 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
-  const submitUser = async (e: FormEvent) => {
+  const submitUser = (e: FormEvent) => {
     e.preventDefault();
     if (password !== repeatedPassword && !signIn) {
       return setCustomError("password does not match");
     } else {
-      try {
-        signIn
-          ? await login({ variables: { email, password } })
-          : await register({ variables: { username, email, password } });
-        history.push("/");
-      } catch (err) {
-        setCustomError(err.message);
-      }
+      signIn
+        ? login({ variables: { email, password } })
+        : register({ variables: { username, email, password } });
     }
   };
   return (
     <section className="slide-overflow">
-      <StyledForm slideDirection="up" onSubmit={submitUser}>
+      <StyledForm slideDirection="up" width={300} onSubmit={submitUser}>
         {!signIn && (
           <TextField
             name="username"
@@ -113,7 +143,7 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
           </>
         )}
         <div>
-          <StyledButton type="submit">
+          <StyledButton type="submit" disabled={loginLoading || registeLoading}>
             {signIn ? "Sign In" : "Register"}
           </StyledButton>
           Or
