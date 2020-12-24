@@ -1,9 +1,9 @@
 import { makeStyles, Paper, PaperProps, Slide } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  signInContainer: {
+  container: {
     margin: "10% auto auto auto",
-    width: 300,
+    width: ({ width }: any) => (width ? width : "auto"),
     fontSize: ".8em",
     boxShadow: "0px 5px 10px -8px black",
     padding: "20px 30px",
@@ -34,17 +34,19 @@ const useStyles = makeStyles((theme) => ({
 
 interface StyledFormProps extends PaperProps {
   slideDirection: "up" | "left" | "down" | "right";
+  width?: string | number;
 }
 
 const StyledForm = ({
   children,
   slideDirection,
+  width,
   ...props
 }: StyledFormProps) => {
-  const classes = useStyles();
+  const classes = useStyles({ width });
   return (
     <Slide direction={slideDirection} in mountOnEnter unmountOnExit>
-      <Paper className={classes.signInContainer} {...props}>
+      <Paper className={classes.container} {...props}>
         <form className={classes.form}>{children}</form>
       </Paper>
     </Slide>

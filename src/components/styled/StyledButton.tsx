@@ -12,10 +12,14 @@ const useStyles = makeStyles({
   },
 });
 
-const StyledButton: FC<ButtonProps> = ({ children }) => {
+const StyledButton: FC<ButtonProps> = ({ children, ...props }) => {
   const classes = useStyles();
   return (
-    <Button variant="outlined" classes={{ outlinedPrimary: classes.outlined }}>
+    <Button
+      variant="outlined"
+      {...props}
+      classes={{ outlinedPrimary: classes.outlined }}
+    >
       {children}
     </Button>
   );
