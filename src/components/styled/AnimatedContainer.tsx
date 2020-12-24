@@ -3,7 +3,7 @@ import { FC } from "react";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    margin: "8% auto auto auto",
+    margin: ({ topMargin }: any) => `${topMargin || "auto"} auto auto auto`,
     width: ({ width }: any) => (width ? width : "auto"),
     height: ({ height }: any) => (height ? height : "auto"),
     fontSize: ".8em",
@@ -18,15 +18,17 @@ const useStyles = makeStyles((theme) => ({
 interface AnimatedContainerProps extends PaperProps {
   width?: string | number;
   height?: string | number;
+  topMargin?: string;
 }
 
 const AnimatedContainer: FC<AnimatedContainerProps> = ({
   children,
   width,
   height,
+  topMargin,
   ...props
 }) => {
-  const classes = useStyles({ width, height });
+  const classes = useStyles({ width, height, topMargin });
   return (
     <Grow in timeout={500}>
       <Paper className={classes.container} {...props}>
