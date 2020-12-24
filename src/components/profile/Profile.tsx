@@ -11,7 +11,7 @@ import StyledAvatar from "../styled/StyledAvatar";
 const Profile = () => {
   const [value, setValue] = useState(0);
 
-  const { loading, data, error } = useQuery<UserProfile>(MY_PROFILE);
+  const { loading, data } = useQuery<UserProfile>(MY_PROFILE);
 
   const handleChange = (_: any, newValue: number) => {
     setValue(newValue);
@@ -67,15 +67,9 @@ const Profile = () => {
           <StyledTab label="Saved" />
         </StyledTabs>
         <TabPanel value={value} index={0}>
-          {(
-            <Typography variant="body1" paragraph>
-              {data?.myProfile.bio}
-            </Typography>
-          ) ?? (
-            <div className="dev">
-              <h1> empty </h1>
-            </div>
-          )}
+          <Typography variant="body1" paragraph>
+            {data?.myProfile.bio || ""}
+          </Typography>
         </TabPanel>
         <TabPanel value={value} index={1}>
           <div className="dev">
