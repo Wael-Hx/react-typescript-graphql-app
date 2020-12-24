@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const CURRENT_USER = gql`
+export const ME = gql`
   query Me {
     me {
       id
@@ -8,5 +8,41 @@ export const CURRENT_USER = gql`
       email
       createdAt
     }
+  }
+`;
+
+export const MY_PROFILE = gql`
+  query MyProfile {
+    myProfile {
+      user {
+        username
+        createdAt
+        updatedAt
+      }
+      displayName
+      bio
+      avatar
+      saved {
+        id
+        title
+        images
+      }
+      posts {
+        id
+        title
+        images
+      }
+      likes {
+        id
+        title
+        images
+      }
+    }
+  }
+`;
+
+export const USER = gql`
+  query User {
+    loggedUser @client
   }
 `;
