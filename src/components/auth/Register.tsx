@@ -23,10 +23,6 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
           isAuthenticated: true,
           user: login,
         });
-        loggedUserVar({
-          isAuthenticated: true,
-          user: login,
-        });
         history.push("/");
       }
     },
@@ -37,10 +33,6 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
   const [register, { loading: registeLoading }] = useMutation(REGISTER, {
     onCompleted({ register }) {
       if (register) {
-        loggedUserVar({
-          isAuthenticated: true,
-          user: register,
-        });
         loggedUserVar({
           isAuthenticated: true,
           user: register,
@@ -133,6 +125,7 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
               type="password"
               label="Repeat Password"
               required
+              autoComplete="off"
               error={customError.includes("match")}
               helperText={customError.includes("match") && customError}
             />
