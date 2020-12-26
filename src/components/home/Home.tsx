@@ -11,7 +11,7 @@ const Home = () => {
   }: UserData = data;
 
   return (
-    <AnimatedContainer width="70%" height="70vh" topMargin="8%" square>
+    <AnimatedContainer width="70%" height="70vh" topMargin="15vh" square>
       <div className="dev">
         <h1>
           {`hello ${user?.username || ""}`} <br /> this page is under

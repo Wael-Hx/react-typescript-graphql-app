@@ -30,13 +30,16 @@ export const LOGOUT = gql`
   }
 `;
 export const CREATE_PROFILE = gql`
-  mutation CreateProfile($bio: String, $avatar: String) {
-    createProfile(userProfile: { bio: $bio, avatar: $avatar }) {
+  mutation CreateProfile($displayName: String, $bio: String, $avatar: String) {
+    createProfile(
+      userProfile: { displayName: $displayName, bio: $bio, avatar: $avatar }
+    ) {
       user {
         username
         createdAt
         updatedAt
       }
+      displayName
       bio
       avatar
       saved {
@@ -49,7 +52,7 @@ export const CREATE_PROFILE = gql`
         title
         images
       }
-      likes {
+      liked {
         id
         title
         images
@@ -59,14 +62,17 @@ export const CREATE_PROFILE = gql`
 `;
 
 export const UPDATE_PROFILE = gql`
-  mutation CreateProfile($bio: String, $avatar: String) {
-    createProfile(userProfile: { bio: $bio, avatar: $avatar }) {
+  mutation UpdateProfile($displayName: String, $bio: String, $avatar: String) {
+    updateProfile(
+      userProfile: { displayName: $displayName, bio: $bio, avatar: $avatar }
+    ) {
       user {
         username
         updatedAt
       }
       bio
       avatar
+      displayName
     }
   }
 `;

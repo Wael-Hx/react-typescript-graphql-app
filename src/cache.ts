@@ -27,7 +27,7 @@ interface User {
   createdAt: string;
 }
 
-interface UserVar {
+export interface UserVar {
   isAuthenticated: boolean;
   user: User | null;
   loading?: boolean;

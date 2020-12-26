@@ -3,33 +3,32 @@ import { useState } from "react";
 import { MY_PROFILE, UserProfile } from "../../gql/queries/users";
 import AnimatedContainer from "../styled/AnimatedContainer";
 import { Skeleton, Typography } from "@material-ui/core";
+import EditIcon from "@material-ui/icons/Edit";
 import StyledTab from "../styled/StyledTab";
 import StyledTabs from "../styled/StyledTabs";
 import TabPanel from "../styled/TabPanel";
 import StyledAvatar from "../styled/StyledAvatar";
+import AddProfile from "./AddProfile";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const [value, setValue] = useState(0);
-
   const { loading, data } = useQuery<UserProfile>(MY_PROFILE);
 
   const handleChange = (_: any, newValue: number) => {
     setValue(newValue);
   };
 
+  if (loading) {
+    return <h1 className="center">Loading ...</h1>;
+  }
   if (!loading && data?.myProfile === null) {
-    return (
-      <AnimatedContainer width="70%" height="70vh" topMargin="8%" square>
-        <div className="dev">
-          <h1>create your profile here</h1>
-        </div>
-      </AnimatedContainer>
-    );
+    return <AddProfile />;
   }
 
   return (
     <>
-      <AnimatedContainer width="70%" topMargin="8%" height={140} square>
+      <AnimatedContainer width="70%" topMargin="15vh" height={140} square>
         {loading ? (
           <Skeleton variant="circular">
             <StyledAvatar size={12}></StyledAvatar>
@@ -40,12 +39,18 @@ const Profile = () => {
             alt={data?.myProfile.user.username}
             size={12}
           >
-            {data?.myProfile.displayName.charAt(0)}
+            {data?.myProfile.displayName.charAt(0) ||
+              data?.myProfile.user.username.charAt(0)}
           </StyledAvatar>
         )}
-        <Typography variant="h5" color="primary">
-          {data?.myProfile.displayName}
-        </Typography>
+        <div className="aligned">
+          <Typography variant="h5" color="primary">
+            {data?.myProfile.displayName}
+          </Typography>
+          <Link to="/profile/edit">
+            <EditIcon color="primary" fontSize="small" />
+          </Link>
+        </div>
       </AnimatedContainer>
       <AnimatedContainer
         width="70%"
