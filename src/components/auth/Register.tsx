@@ -68,7 +68,12 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
   };
   return (
     <section className="slide-overflow">
-      <StyledForm slideDirection="up" width={300} onSubmit={submitUser}>
+      <StyledForm
+        slideDirection="up"
+        topMargin="15vh"
+        width={300}
+        onSubmit={submitUser}
+      >
         {!signIn && (
           <TextField
             name="username"

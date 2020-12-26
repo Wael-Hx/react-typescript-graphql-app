@@ -2,10 +2,9 @@ import { makeStyles, Paper, PaperProps, Slide } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    margin: "10% auto auto auto",
+    margin: ({ topMargin }: any) => `${topMargin || "auto"} auto auto auto`,
     width: ({ width }: any) => (width ? width : "auto"),
     fontSize: ".8em",
-    boxShadow: "0px 5px 10px -8px black",
     padding: "20px 30px",
     [theme.breakpoints.down("sm")]: {
       margin: "20% auto auto auto",
@@ -33,21 +32,40 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface StyledFormProps extends PaperProps {
-  slideDirection: "up" | "left" | "down" | "right";
+  slideDirection?: "up" | "left" | "down" | "right";
   width?: string | number;
+  disableAnimation?: boolean;
+  topMargin?: string;
 }
 
 const StyledForm = ({
   children,
   slideDirection,
   width,
+  disableAnimation,
+  topMargin,
   ...props
 }: StyledFormProps) => {
-  const classes = useStyles({ width });
+  const classes = useStyles({ width, topMargin });
+  if (disableAnimation) {
+    return (
+      <Paper
+        component="form"
+        className={`${classes.container} ${classes.form}`}
+        {...props}
+      >
+        {children}
+      </Paper>
+    );
+  }
   return (
-    <Slide direction={slideDirection} in mountOnEnter unmountOnExit>
-      <Paper className={classes.container} {...props}>
-        <form className={classes.form}>{children}</form>
+    <Slide direction={slideDirection ?? "up"} in mountOnEnter unmountOnExit>
+      <Paper
+        component="form"
+        className={`${classes.container} ${classes.form}`}
+        {...props}
+      >
+        {children}
       </Paper>
     </Slide>
   );
