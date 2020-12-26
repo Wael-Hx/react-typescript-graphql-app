@@ -18,6 +18,7 @@ const Navbar: FC<RouteComponentProps> = ({ history }) => {
       loggedUserVar({
         isAuthenticated: true,
         user: data.me,
+        loading: false,
       });
     }
   }, [data]);
@@ -40,25 +41,22 @@ const Navbar: FC<RouteComponentProps> = ({ history }) => {
   return (
     <nav>
       {userData?.loggedUser.isAuthenticated ? (
-        <StyledButton onClick={logout} disabled={logoutLoading}>
-          logout
-        </StyledButton>
+        <>
+          <StyledButton onClick={logout} disabled={logoutLoading}>
+            logout
+          </StyledButton>
+          <Link className="link" to="/profile">
+            <StyledButton>Profile</StyledButton>
+          </Link>
+        </>
       ) : (
         <Link className="link" to="/auth">
           <StyledButton disabled={loading}> Sign In </StyledButton>
         </Link>
       )}
-
-      {userData?.loggedUser.user && (
-        <>
-          <Link className="link" to="/profile">
-            <StyledButton>Profile</StyledButton>
-          </Link>
-          <Link className="link" to="/">
-            <StyledButton>Home</StyledButton>
-          </Link>
-        </>
-      )}
+      <Link className="link" to="/">
+        <StyledButton>Home</StyledButton>
+      </Link>
     </nav>
   );
 };
