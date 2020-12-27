@@ -7,10 +7,11 @@ const useStyles = makeStyles((theme) => ({
     width: ({ width }: any) => (width ? width : "auto"),
     height: ({ height }: any) => (height ? height : "auto"),
     fontSize: ".8em",
-
     padding: "20px 30px",
     [theme.breakpoints.down("sm")]: {
       margin: "20% auto auto auto",
+      padding: "8px 20px",
+      width: ({ width }: any) => (width ? addWidth(width) : "auto"),
     },
   },
 }));
@@ -39,3 +40,10 @@ const AnimatedContainer: FC<AnimatedContainerProps> = ({
 };
 
 export default AnimatedContainer;
+
+const addWidth = (width: number | string): string | number => {
+  if (typeof width === "string") {
+    return `${Math.round((100 - parseInt(width)) / 2) + parseInt(width)}%`;
+  }
+  return Math.round((100 - width) / 2) + width;
+};
