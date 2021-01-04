@@ -14,6 +14,7 @@ export const ME = gql`
 export const MY_PROFILE = gql`
   query MyProfile {
     myProfile {
+      id
       user {
         username
         createdAt
@@ -55,6 +56,7 @@ export interface PostDetails {
 
 export interface UserProfile {
   myProfile: {
+    id: string;
     user: {
       username: string;
       createdAt: string;

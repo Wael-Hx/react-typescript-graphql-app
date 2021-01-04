@@ -22,10 +22,9 @@ const Profile = () => {
   if (loading) {
     return <h1 className="center">Loading ...</h1>;
   }
-  if (!loading && data?.myProfile === null) {
+  if (!loading && !data?.myProfile) {
     return <AddProfile />;
   }
-
   return (
     <>
       <AnimatedContainer width="70%" topMargin="15vh" height={140} square>

@@ -34,11 +34,6 @@ const AddProfile = () => {
     onError(error) {
       setProfileError(error.message);
     },
-    refetchQueries: [
-      {
-        query: MY_PROFILE,
-      },
-    ],
     onCompleted() {
       history.push("/profile");
     },

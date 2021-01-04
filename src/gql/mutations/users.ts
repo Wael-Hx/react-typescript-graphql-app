@@ -34,6 +34,7 @@ export const CREATE_PROFILE = gql`
     createProfile(
       userProfile: { displayName: $displayName, bio: $bio, avatar: $avatar }
     ) {
+      id
       user {
         username
         createdAt
@@ -66,9 +67,11 @@ export const UPDATE_PROFILE = gql`
     updateProfile(
       userProfile: { displayName: $displayName, bio: $bio, avatar: $avatar }
     ) {
+      id
       user {
         username
         updatedAt
+        createdAt
       }
       bio
       avatar
