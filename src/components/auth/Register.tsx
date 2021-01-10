@@ -4,6 +4,7 @@ import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { loggedUserVar } from "../../cache";
 import { LOGIN, REGISTER } from "../../gql/mutations/users";
+import { MY_PROFILE } from "../../gql/queries/users";
 import StyledButton from "../styled/StyledButton";
 import StyledForm from "../styled/StyledForm";
 
@@ -17,6 +18,11 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
     repeatedPassword: "",
   });
   const [login, { loading: loginLoading }] = useMutation(LOGIN, {
+    refetchQueries: [
+      {
+        query: MY_PROFILE,
+      },
+    ],
     onCompleted({ login }) {
       if (login) {
         loggedUserVar({
