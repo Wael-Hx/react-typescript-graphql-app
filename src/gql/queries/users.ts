@@ -1,14 +1,13 @@
 import { gql } from "@apollo/client";
+import { UserFragment } from "../fragments/UserFragment";
 
 export const ME = gql`
   query Me {
     me {
-      id
-      username
-      email
-      createdAt
+      ...CurrentUser
     }
   }
+  ${UserFragment}
 `;
 
 export const MY_PROFILE = gql`
