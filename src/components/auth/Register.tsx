@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { TextField } from "@material-ui/core";
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { Link, RouteComponentProps } from "react-router-dom";
 import { loggedUserVar } from "../../cache";
 import { LOGIN, REGISTER } from "../../gql/mutations/users";
 import { MY_PROFILE } from "../../gql/queries/users";
@@ -127,7 +127,7 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
               : null
           }
         />
-        {!signIn && (
+        {!signIn ? (
           <>
             <TextField
               value={repeatedPassword}
@@ -145,6 +145,10 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
               Privacy Policy.
             </p>
           </>
+        ) : (
+          <Link className="link pointer" to="/reset-password">
+            Forgot your Password ?
+          </Link>
         )}
         <div>
           <StyledButton type="submit" disabled={loginLoading || registeLoading}>
