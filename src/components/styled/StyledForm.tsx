@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
       "& h3": {
         fontFamily: "Roboto , system-ui",
         color: "#68adef",
+        padding: "0 15px",
         fontWeight: "500",
         textTransform: "uppercase",
       },
