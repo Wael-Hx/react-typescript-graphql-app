@@ -26,6 +26,18 @@ export const LOGOUT = gql`
     logout
   }
 `;
+
+export const FORGOT_PASSWORD = gql`
+  mutation ForgotPassword($email: String!) {
+    forgotPassword(email: $email)
+  }
+`;
+export const CHANGE_PASSWORD = gql`
+  mutation ChangePassword($token: String!, $newPassword: String!) {
+    changePassword(token: $token, newPassword: $newPassword)
+  }
+`;
+
 export const CREATE_PROFILE = gql`
   mutation CreateProfile($displayName: String, $bio: String, $avatar: String) {
     createProfile(
