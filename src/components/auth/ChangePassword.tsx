@@ -7,6 +7,7 @@ import { loggedUserVar, UserVar } from "../../cache";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { CHANGE_PASSWORD, FORGOT_PASSWORD } from "../../gql/mutations/users";
 import AlertMessage from "../styled/AlertMessage";
+import { isToken } from "../../utils/decodeJwt";
 
 const ChangePassword = () => {
   const [password, setPassword] = useState("");
@@ -78,7 +79,7 @@ const ChangePassword = () => {
       </div>
     );
   }
-  if (auth.user) {
+  if (auth.user || (typeof token !== "undefined" && !isToken(token))) {
     return <Redirect to="/" />;
   }
   return (
