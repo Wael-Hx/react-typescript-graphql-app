@@ -14,20 +14,27 @@ const Navbar: FC<RouteComponentProps> = ({ history }) => {
   const { data: userData } = useQuery<UserData>(USER);
 
   useEffect(() => {
-    if (data?.me) {
+    if (data?.me && !loading) {
       loggedUserVar({
         isAuthenticated: true,
         user: data.me,
         loading: false,
       });
+    } else if (!data?.me && !loading) {
+      loggedUserVar({
+        isAuthenticated: false,
+        user: null,
+        loading: false,
+      });
     }
-  }, [data]);
+  }, [data, loading]);
 
   const logout = async () => {
     try {
       await logoutUser();
       refetch();
       loggedUserVar({
+        ...loggedUserVar(),
         isAuthenticated: false,
         user: null,
       });
