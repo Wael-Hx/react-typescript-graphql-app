@@ -28,6 +28,7 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
         loggedUserVar({
           isAuthenticated: true,
           user: login,
+          loading: false,
         });
         history.push("/");
       }
@@ -42,6 +43,7 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
         loggedUserVar({
           isAuthenticated: true,
           user: register,
+          loading: false,
         });
         history.push("/profile");
       }
