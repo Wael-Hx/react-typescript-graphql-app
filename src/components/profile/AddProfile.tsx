@@ -53,50 +53,52 @@ const AddProfile = () => {
   };
 
   return (
-    <AnimatedContainer width="70%" height="70vh" topMargin="15vh" square>
-      <div className="dev">
-        <h1>create your profile here</h1>
-      </div>
-      <StyledForm onSubmit={submitProfile} width="70%" elevation={0}>
-        <TextField
-          name="avatar"
-          value={avatar}
-          onChange={handleChange}
-          label="Avatar"
-          placeholder="link to your avatar"
-          variant="outlined"
-          autoComplete="off"
-        />
-        <TextField
-          name="displayName"
-          value={displayName}
-          onChange={handleChange}
-          label="Name"
-          placeholder="add your name"
-          variant="outlined"
-          autoComplete="off"
-        />
-        <TextField
-          name="bio"
-          value={bio}
-          onChange={handleChange}
-          label="Bio"
-          multiline
-          rows={4}
-          placeholder="add more information about yourself"
-          variant="outlined"
-          autoComplete="off"
-        />
-        <StyledButton type="submit">submit</StyledButton>
-      </StyledForm>
-      {profileError && (
-        <AlertMessage
-          onClick={() => setProfileError("")}
-          messageType="error"
-          alertText={profileError}
-        />
-      )}
-    </AnimatedContainer>
+    <section className="slide-overflow">
+      <AnimatedContainer width="70%" height="70vh" topMargin="15vh" square>
+        <div className="dev">
+          <h1>create your profile here</h1>
+        </div>
+        <StyledForm onSubmit={submitProfile} width="70%" elevation={0}>
+          <TextField
+            name="avatar"
+            value={avatar}
+            onChange={handleChange}
+            label="Avatar"
+            placeholder="link to your avatar"
+            variant="outlined"
+            autoComplete="off"
+          />
+          <TextField
+            name="displayName"
+            value={displayName}
+            onChange={handleChange}
+            label="Name"
+            placeholder="add your name"
+            variant="outlined"
+            autoComplete="off"
+          />
+          <TextField
+            name="bio"
+            value={bio}
+            onChange={handleChange}
+            label="Bio"
+            multiline
+            rows={4}
+            placeholder="add more information about yourself"
+            variant="outlined"
+            autoComplete="off"
+          />
+          <StyledButton type="submit">submit</StyledButton>
+        </StyledForm>
+        {profileError && (
+          <AlertMessage
+            onClick={() => setProfileError("")}
+            messageType="error"
+            alertText={profileError}
+          />
+        )}
+      </AnimatedContainer>
+    </section>
   );
 };
 
