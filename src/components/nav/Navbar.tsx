@@ -1,12 +1,13 @@
-import { Link, RouteComponentProps } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import StyledButton from "../styled/StyledButton";
 import { useMutation, useQuery } from "@apollo/client";
 import { ME, USER } from "../../gql/queries/users";
 import { LOGOUT } from "../../gql/mutations/users";
 import { loggedUserVar, UserData } from "../../cache";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 
-const Navbar: FC<RouteComponentProps> = ({ history }) => {
+const Navbar = () => {
+  const history = useHistory();
   const { loading, data, refetch } = useQuery(ME, {
     fetchPolicy: "network-only",
   });
