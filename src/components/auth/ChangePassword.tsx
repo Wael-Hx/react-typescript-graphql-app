@@ -110,12 +110,12 @@ const ChangePassword = () => {
             helperText={status.type === "error" ? status.msg : null}
           />
         )}
-        <StyledButton type="submit" disabled={loading || resetPassLoading}>
-          {loading || resetPassLoading ? (
-            <CircularProgress color="inherit" size="1rem" />
-          ) : (
-            "Confirm"
-          )}
+        <StyledButton
+          type="submit"
+          disabled={loading || resetPassLoading}
+          spinner={loading || resetPassLoading}
+        >
+          Confirm
         </StyledButton>
       </StyledForm>
       {status.type === "success" && (

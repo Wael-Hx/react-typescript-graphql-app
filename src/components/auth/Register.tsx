@@ -153,7 +153,11 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
           </Link>
         )}
         <div>
-          <StyledButton type="submit" disabled={loginLoading || registeLoading}>
+          <StyledButton
+            type="submit"
+            disabled={loginLoading || registeLoading}
+            spinner={loginLoading || registeLoading}
+          >
             {signIn ? "Sign In" : "Register"}
           </StyledButton>
           Or

@@ -1,4 +1,9 @@
-import { Button, makeStyles, ButtonProps } from "@material-ui/core";
+import {
+  Button,
+  makeStyles,
+  ButtonProps,
+  CircularProgress,
+} from "@material-ui/core";
 import { FC } from "react";
 
 const useStyles = makeStyles({
@@ -17,7 +22,15 @@ const useStyles = makeStyles({
   },
 });
 
-const StyledButton: FC<ButtonProps> = ({ children, ...props }) => {
+interface StyledButtonProps extends ButtonProps {
+  spinner?: boolean;
+}
+
+const StyledButton: FC<StyledButtonProps> = ({
+  children,
+  spinner,
+  ...props
+}) => {
   const classes = useStyles();
   return (
     <Button
@@ -25,7 +38,7 @@ const StyledButton: FC<ButtonProps> = ({ children, ...props }) => {
       {...props}
       classes={{ outlinedPrimary: classes.outlined, root: classes.root }}
     >
-      {children}
+      {spinner ? <CircularProgress color="inherit" size="1rem" /> : children}
     </Button>
   );
 };
