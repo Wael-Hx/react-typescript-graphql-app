@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { useState } from "react";
 import { MY_PROFILE, UserProfile } from "../../gql/queries/users";
 import AnimatedContainer from "../styled/AnimatedContainer";
-import { Skeleton, Typography } from "@material-ui/core";
+import { CircularProgress, Skeleton, Typography } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import StyledTab from "../styled/StyledTab";
 import StyledTabs from "../styled/StyledTabs";
@@ -20,7 +20,11 @@ const Profile = () => {
   };
 
   if (loading) {
-    return <h1 className="center">Loading ...</h1>;
+    return (
+      <section className="center">
+        <CircularProgress color="inherit" size="3rem" />
+      </section>
+    );
   }
   if (!loading && !data?.myProfile) {
     return <AddProfile />;
